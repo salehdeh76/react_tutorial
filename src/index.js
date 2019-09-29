@@ -4,6 +4,7 @@ import './index.css'
 
 const base = [0,1,2,];
 
+// TODO When someone wins, highlight the three squares that caused the win.
 
 function Square(props) {
     return (
@@ -17,7 +18,6 @@ function Square(props) {
 // inform the Board component when they’re clicked. In React terms, the Square components are now controlled components.
 // The Board has full control over them.
 class Board extends React.Component {
-
     renderSquare(i) {
         return (
             <Square
@@ -62,6 +62,7 @@ class Game extends React.Component {
                 this_move:null,
             }],
             xIsNext: true,
+            reverse:false,
         };
     }
 
@@ -97,12 +98,16 @@ class Game extends React.Component {
 
             return (
                 <li key={move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                    <button Class="btn btn-info" onClick={() => this.jumpTo(move)}>{desc}</button>
                     <strong>{history.length===(move+1)?"salam":""}</strong>
                     <p>col={this_move%3}, row={Math.floor(this_move/3)}</p>
                 </li>
             );
         });
+
+        if (this.state.reverse)
+            moves.reverse();
+
 
         let status;
         if (winner) {
@@ -121,12 +126,26 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
+                    <br/>
+                    <div>
+                        <button Class="btn btn-success" onClick={()=>this.reverse()}>
+                        reverse
+                        </button>
+
+                    </div>
+                    <br/>
+                    <br/>
                     <ol>{moves}</ol>
                 </div>
             </div>
         );
     }
 
+    reverse() {
+        this.setState({
+            reverse: !this.state.reverse,
+        })
+    }
     jumpTo(move) {
         this.setState({
             // stepNumber:move,
@@ -161,5 +180,12 @@ function calculateWinner(squares) {
             return squares[a];
         }
     }
-    return null;
+
+    for (let i = 0; i < 9; i++) {
+        if (squares[i]==null){
+            return null
+        }
+    }
+
+    return "draw";
 }
