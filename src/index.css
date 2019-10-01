@@ -16,7 +16,9 @@ ol, ul {
 .status {
   margin-bottom: 10px;
 }
-
+.square--winning {
+  background-color: yellow;
+}
 .square {
   background: #fff;
   border: 1px solid #999;

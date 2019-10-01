@@ -8,7 +8,7 @@ const base = [0,1,2,];
 
 function Square(props) {
     return (
-        <button className="square" onClick={props.onClick}>
+        <button className="square" onClick={props.onClick} >
             {props.value}
         </button>
     );
@@ -98,8 +98,7 @@ class Game extends React.Component {
 
             return (
                 <li key={move}>
-                    <button Class="btn btn-info" onClick={() => this.jumpTo(move)}>{desc}</button>
-                    <strong>{history.length===(move+1)?"salam":""}</strong>
+                    <button Class="btn btn-info" onClick={() => this.jumpTo(move)}>{history.length===(move+1)?<b>{desc}</b>:desc}</button>
                     <p>col={this_move%3}, row={Math.floor(this_move/3)}</p>
                 </li>
             );
